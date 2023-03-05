@@ -68,6 +68,8 @@ export interface ChatMessage {
   parentMessageId?: string
   // only relevant for ChatGPTUnofficialProxyAPI
   conversationId?: string
+
+  finishReason?: string
 }
 
 export class ChatGPTError extends Error {
