@@ -38,6 +38,7 @@ type SendMessageBrowserOptions = {
     action?: MessageActionType;
     timeoutMs?: number;
     onProgress?: (partialResponse: ChatMessage) => void;
+    onMessage?: (partialResponse: ChatMessage, message: any) => void;
     abortSignal?: AbortSignal;
 };
 interface ChatMessage {

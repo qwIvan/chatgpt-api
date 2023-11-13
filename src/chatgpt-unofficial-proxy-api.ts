@@ -128,7 +128,8 @@ export class ChatGPTUnofficialProxyAPI {
       messageId = uuidv4(),
       action = 'next',
       timeoutMs,
-      onProgress
+      onProgress,
+      onMessage
     } = opts
 
     let { abortSignal } = opts
@@ -207,6 +208,10 @@ export class ChatGPTUnofficialProxyAPI {
               // console.log('event', JSON.stringify(convoResponseEvent, null, 2))
 
               if (message) {
+                if (onMessage) {
+                  onMessage(result, message)
+                }
+
                 let text = message?.content?.parts?.[0]
 
                 if (text) {

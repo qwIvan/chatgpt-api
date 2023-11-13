@@ -512,7 +512,8 @@ var ChatGPTUnofficialProxyAPI = class {
       messageId = uuidv42(),
       action = "next",
       timeoutMs,
-      onProgress
+      onProgress,
+      onMessage
     } = opts;
     let { abortSignal } = opts;
     let abortController = null;
@@ -578,6 +579,9 @@ var ChatGPTUnofficialProxyAPI = class {
               }
               const message = convoResponseEvent.message;
               if (message) {
+                if (onMessage) {
+                  onMessage(result, message);
+                }
                 let text2 = (_c = (_b = message == null ? void 0 : message.content) == null ? void 0 : _b.parts) == null ? void 0 : _c[0];
                 if (text2) {
                   result.text = text2;
