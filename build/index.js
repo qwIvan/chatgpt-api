@@ -74,9 +74,13 @@ async function fetchSSE(url, options, fetch2 = fetch) {
       }
     });
   } else {
+    let str;
     for await (const chunk of streamAsyncIterable(res.body)) {
-      const str = new TextDecoder().decode(chunk);
+      str = new TextDecoder().decode(chunk);
       parser.feed(str);
+    }
+    if (str && str.endsWith("\n") && !str.endsWith("\n\n")) {
+      parser.feed("\n");
     }
   }
 }

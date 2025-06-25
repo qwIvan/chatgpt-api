@@ -49,9 +49,14 @@ export async function fetchSSE(
       }
     })
   } else {
+    let str
     for await (const chunk of streamAsyncIterable(res.body)) {
-      const str = new TextDecoder().decode(chunk)
+      str = new TextDecoder().decode(chunk)
       parser.feed(str)
+    }
+    if (str && str.endsWith('\n') && !str.endsWith('\n\n')) {
+      // 某些实现可能会在最后一个事件后没有额外的换行符，由我来修复
+      parser.feed('\n')
     }
   }
 }
